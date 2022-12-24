@@ -1,52 +1,17 @@
-import logo from './logo.svg';
-import './App.css';
+//import logo from '../logo.svg';
+//import './App.css';
+import Footer from "./Footer";
+import Header from "./Header";
+import Main from "./Main";
 
 function App() {
   return (
     <body className="body">
       <div className="page">
-        <header className="header">
-          <div className="header__logo"></div>
-        </header>
-        <main>
-          <section className="profile">
-            <div className="profile__data">
-              <div className="profile__avatar-wrapper">
-                <img
-                  className="profile__avatar"
-                  src="<%=require('./images/Avatar.png')%>"
-                  alt=""
-                />
-                <button
-                  aria-label=""
-                  type="button"
-                  className="profile__avatar-button"
-                ></button>
-              </div>
-              <div className="profile__info">
-                <h1 className="profile__title">Жак-Ив Кусто</h1>
-                <button
-                  aria-label="кнопка редактировать профиль"
-                  type="button"
-                  className="profile__edit-button button-opacity"
-                ></button>
-                <p className="profile__subtitle">Исследователь океана</p>
-              </div>
-            </div>
-            <button
-              aria-label="кнопка добавить карточку места"
-              type="button"
-              className="profile__add-button button-opacity"
-            ></button>
-          </section>
+        <Header />
+        <Main />
+        <Footer />
 
-          <section className="cards">
-            <ul className="cards__items"></ul>
-          </section>
-        </main>
-        <footer className="footer">
-          <p className="footer__author">&copy; 2022. Number396</p>
-        </footer>
         {/* <!-- ------------------------------------------------------------------------ --> */}
         <div className="popup popup_edit-profile">
           <div className="popup__container">
