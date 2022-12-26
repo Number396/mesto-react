@@ -1,4 +1,24 @@
+import { useEffect, useState } from "react";
+import { api } from "../utils/api.js";
+
 function Main(props) {
+    const [userName, setUserName] = useState();
+    const [userDescription, setUserDescription] = useState();
+    const [userAvatar, setUserAvatar] = useState();
+    const [cards, setCards] = useState([]);
+
+    useEffect(() => {
+        Promise.all([api.getUserInfo(), api.getCards()])
+            .then(([userData, initialCards]) => {
+                setUserName(userData.name);
+                setUserDescription(userData.about);
+                setUserAvatar(userData.avatar);
+                console.log(userAvatar);
+            })
+            .catch((error) => console.log(`Ошибка при загрузке страницы: ${error}`));
+    }, []);
+
+
     return (
         <main>
             <section className="profile">
@@ -6,7 +26,7 @@ function Main(props) {
                     <div className="profile__avatar-wrapper">
                         <img
                             className="profile__avatar"
-                            src="<%=require('./images/Avatar.png')%>"
+                            src={userAvatar}
                             alt=""
                         />
                         <button
@@ -17,14 +37,14 @@ function Main(props) {
                         ></button>
                     </div>
                     <div className="profile__info">
-                        <h1 className="profile__title">Жак-Ив Кусто</h1>
+                        <h1 className="profile__title">{userName}</h1>
                         <button
                             onClick={props.onEditProfile}
                             aria-label="кнопка редактировать профиль"
                             type="button"
                             className="profile__edit-button button-opacity"
                         ></button>
-                        <p className="profile__subtitle">Исследователь</p>
+                        <p className="profile__subtitle">{userDescription}</p>
                     </div>
                 </div>
                 <button
