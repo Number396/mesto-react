@@ -1,5 +1,6 @@
 //import logo from '../logo.svg';
 //import './App.css';
+import React from "react";
 import { useState } from "react";
 import Footer from "./Footer";
 import Header from "./Header";
@@ -11,31 +12,24 @@ function App() {
   const [isEditProfilePopupOpen, setIsEditProfilePopupOpen] = useState(false);
   const [isAddPlacePopupOpen, setisAddPlacePopupOpen] = useState(false);
   const [isEditAvatarPopupOpen, setisEditAvatarPopupOpen] = useState(false);
+  // console.log('hhhh');
 
   function handleEditProfileClick() {
-    // const popupEdit = document.querySelector(".popup_type_edit");
-    // popupEdit.classList.add("popup_enabled");
     setIsEditProfilePopupOpen(true);
   }
 
   function handleAddPlaceClick() {
-    // const popupPlace = document.querySelector(".popup_type_add");
-    // popupPlace.classList.add("popup_enabled");
     setisAddPlacePopupOpen(true);
   }
 
   function handleEditAvatarClick() {
-    // const popupUpdateAvatar = document.querySelector(".popup_type_avatar");
-    // popupUpdateAvatar.classList.add("popup_enabled");
     setisEditAvatarPopupOpen(true);
   }
 
   function closeAllPopups() {
-    console.log('close me');
-    // setIsEditProfilePopupOpen(false);
-    // setisAddPlacePopupOpen(false);
-    // setisEditAvatarPopupOpen(false);
-
+    setIsEditProfilePopupOpen(false);
+    setisAddPlacePopupOpen(false);
+    setisEditAvatarPopupOpen(false);
   }
 
   return (
@@ -48,13 +42,14 @@ function App() {
           onEditAvatar={handleEditAvatarClick}
         />
         <Footer />
+
         <PopupWithForm
           title={"Редактировать профиль"}
           name={"edit"}
           btnText={"Сохранить"}
           flsClass={"popup__set"}
           isOpen={isEditProfilePopupOpen}
-        //onClose={closeAllPopups}
+          onClose={closeAllPopups}
         >
           <input
             type="text"
