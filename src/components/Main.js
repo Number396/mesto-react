@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import { api } from "../utils/api.js";
+import Card from "./Card.js";
 
 function Main(props) {
     const [userName, setUserName] = useState();
@@ -13,7 +14,8 @@ function Main(props) {
                 setUserName(userData.name);
                 setUserDescription(userData.about);
                 setUserAvatar(userData.avatar);
-                console.log(userAvatar);
+                setCards(initialCards);
+                // console.log(initialCards[1]._id);
             })
             .catch((error) => console.log(`Ошибка при загрузке страницы: ${error}`));
     }, []);
@@ -56,7 +58,13 @@ function Main(props) {
             </section>
 
             <section className="cards">
-                <ul className="cards__items"></ul>
+                <ul className="cards__items">
+                    {
+                        cards.map((cardItem) => (
+                            <Card card={cardItem} key={cardItem._id} />
+                        ))
+                    }
+                </ul>
             </section>
         </main>
     );
