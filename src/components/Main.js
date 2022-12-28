@@ -20,17 +20,12 @@ function Main(props) {
             .catch((error) => console.log(`Ошибка при загрузке страницы: ${error}`));
     }, []);
 
-
     return (
         <main>
             <section className="profile">
                 <div className="profile__data">
                     <div className="profile__avatar-wrapper">
-                        <img
-                            className="profile__avatar"
-                            src={userAvatar}
-                            alt=""
-                        />
+                        <img className="profile__avatar" src={userAvatar} alt="" />
                         <button
                             onClick={props.onEditAvatar}
                             aria-label=""
@@ -59,14 +54,13 @@ function Main(props) {
 
             <section className="cards">
                 <ul className="cards__items">
-                    {
-                        cards.map((cardItem) => (
-                            <Card
-                                card={cardItem}
-                                key={cardItem._id}
-                                onCardClick={props.onCardClick} />
-                        ))
-                    }
+                    {cards.map((cardItem) => (
+                        <Card
+                            card={cardItem}
+                            key={cardItem._id}
+                            onCardClick={props.onCardClick}
+                        />
+                    ))}
                 </ul>
             </section>
         </main>

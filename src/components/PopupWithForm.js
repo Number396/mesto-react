@@ -2,7 +2,9 @@ function PopupWithForm(props) {
 
     return (
         <div
-            className={`popup popup_type_${props.name} ${props.isOpen && "popup_enabled"}`}>
+            className={`popup popup_type_${props.name} ${props.isOpen && "popup_enabled"
+                }`}
+        >
             <div className="popup__container">
                 <button
                     onClick={props.onClose}
@@ -14,10 +16,7 @@ function PopupWithForm(props) {
                 <form name={props.name} className="popup__form" noValidate>
                     <fieldset className={props.flsClass}>
                         {props.children}
-                        <button
-                            type="submit"
-                            className="popup__submit-button"
-                        >
+                        <button type="submit" className="popup__submit-button">
                             {props.btnText}
                         </button>
                     </fieldset>

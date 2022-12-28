@@ -1,5 +1,5 @@
 function Card(props) {
-    // console.log(props.card._id);
+
     function handleClick() {
         props.onCardClick(props.card);
     }
