@@ -1,8 +1,12 @@
 function Card(props) {
     // console.log(props.card._id);
+    function handleClick() {
+        props.onCardClick(props.card);
+    }
+
     return (
         <li className="cards__item">
-            <img className="cards__image" src={props.card.link} />
+            <img className="cards__image" src={props.card.link} onClick={handleClick} />
             <button
                 aria-label="кнопка удалить карточку места"
                 type="button"

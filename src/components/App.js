@@ -12,6 +12,8 @@ function App() {
   const [isEditProfilePopupOpen, setIsEditProfilePopupOpen] = useState(false);
   const [isAddPlacePopupOpen, setisAddPlacePopupOpen] = useState(false);
   const [isEditAvatarPopupOpen, setisEditAvatarPopupOpen] = useState(false);
+  const [isImagePopupOpen, setIsImagePopupOpen] = useState(false);
+  const [selectedCard, setSelectedCard] = useState();
   // console.log('hhhh');
 
   function handleEditProfileClick() {
@@ -26,10 +28,26 @@ function App() {
     setisEditAvatarPopupOpen(true);
   }
 
+  function handleImagePopupClick() {
+    console.log('click on close button');
+    // setIsImagePopupOpen(true);
+  }
+
   function closeAllPopups() {
     setIsEditProfilePopupOpen(false);
     setisAddPlacePopupOpen(false);
     setisEditAvatarPopupOpen(false);
+    setIsImagePopupOpen(false);
+  }
+
+  function handleCardClick(card) {
+    console.log('inside handleCardClick');
+    // console.log(card);
+    setIsImagePopupOpen(true);
+    setSelectedCard(card);
+
+    // console.log('selected card----');
+    // console.log(selectedCard);
   }
 
   return (
@@ -40,6 +58,7 @@ function App() {
           onEditProfile={handleEditProfileClick}
           onAddPlace={handleAddPlaceClick}
           onEditAvatar={handleEditAvatarClick}
+          onCardClick={handleCardClick}
         />
         <Footer />
 
@@ -130,7 +149,10 @@ function App() {
           btnText={"Да"}
           flsClass={"popup__set popup__set_type_confirm"}
         />
-        <ImagePopup />
+        <ImagePopup
+          card={selectedCard}
+          isOpenI={isImagePopupOpen}
+          onClose={closeAllPopups} />
       </div>
     </body>
   );
