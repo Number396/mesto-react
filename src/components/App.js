@@ -11,7 +11,6 @@ function App() {
   const [isEditAvatarPopupOpen, setisEditAvatarPopupOpen] = useState(false);
   const [isImagePopupOpen, setIsImagePopupOpen] = useState(false);
   const [selectedCard, setSelectedCard] = useState();
-  // console.log('hhhh');
 
   function handleEditProfileClick() {
     setIsEditProfilePopupOpen(true);
