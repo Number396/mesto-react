@@ -10,7 +10,7 @@ function App() {
   const [isAddPlacePopupOpen, setisAddPlacePopupOpen] = useState(false);
   const [isEditAvatarPopupOpen, setisEditAvatarPopupOpen] = useState(false);
   const [isImagePopupOpen, setIsImagePopupOpen] = useState(false);
-  const [selectedCard, setSelectedCard] = useState();
+  const [selectedCard, setSelectedCard] = useState({});
 
   function handleEditProfileClick() {
     setIsEditProfilePopupOpen(true);
@@ -48,10 +48,10 @@ function App() {
       <Footer />
 
       <PopupWithForm
-        title={"Редактировать профиль"}
-        name={"edit"}
-        btnText={"Сохранить"}
-        flsClass={"popup__set"}
+        title="Редактировать профиль"
+        name="edit"
+        btnText="Сохранить"
+        // flsClass="popup__set"
         isOpen={isEditProfilePopupOpen}
         onClose={closeAllPopups}
       >
@@ -80,10 +80,10 @@ function App() {
       </PopupWithForm>
 
       <PopupWithForm
-        title={"Новое место"}
-        name={"add"}
-        btnText={"Создать"}
-        flsClass={"popup__set"}
+        title="Новое место"
+        name="add"
+        btnText="Создать"
+        // flsClass="popup__set"
         isOpen={isAddPlacePopupOpen}
         onClose={closeAllPopups}
       >
@@ -110,10 +110,10 @@ function App() {
       </PopupWithForm>
 
       <PopupWithForm
-        title={"Обновить аватар"}
-        name={"avatar"}
-        btnText={"Сохранить"}
-        flsClass={"popup__set"}
+        title="Обновить аватар"
+        name="avatar"
+        btnText="Сохранить"
+        // flsClass="popup__set"
         isOpen={isEditAvatarPopupOpen}
         onClose={closeAllPopups}
       >
@@ -129,14 +129,14 @@ function App() {
       </PopupWithForm>
 
       <PopupWithForm
-        title={"Вы уверены?"}
-        name={"confirm"}
-        btnText={"Да"}
-        flsClass={"popup__set popup__set_type_confirm"}
+        title="Вы уверены?"
+        name="confirm"
+        btnText="Да"
+        extraClass="popup__set_type_confirm"
       />
       <ImagePopup
         card={selectedCard}
-        isOpenI={isImagePopupOpen}
+        isOpen={isImagePopupOpen}
         onClose={closeAllPopups} />
     </div>
   );
