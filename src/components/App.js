@@ -14,6 +14,7 @@ function App() {
   const [isImagePopupOpen, setIsImagePopupOpen] = useState(false);
   const [selectedCard, setSelectedCard] = useState({});
   const [currentUser, setCurrentUser] = useState({});
+  const [cards, setCards] = useState([]);
 
   useEffect(() => {
     api.getUserInfo()
@@ -48,6 +49,17 @@ function App() {
     setSelectedCard(card);
   }
 
+  function handleCardLike(card) {
+    const isLiked = card.likes.some(item => item._id === currentUser._id);
+    console.log(isLiked);
+    console.log(card);
+    api.changeLikeCardStatus(card._id, !isLiked)
+      .then((newCard) => {
+        console.log(newCard);
+        setCards((cards) => cards.map((c) => c._id === card._id ? newCard : c));
+      });
+  }
+
   return (
     <div className="page">
       <CurrentUserContext.Provider value={currentUser}>
@@ -57,6 +69,9 @@ function App() {
           onAddPlace={handleAddPlaceClick}
           onEditAvatar={handleEditAvatarClick}
           onCardClick={handleCardClick}
+          onCardLike={handleCardLike}
+          cards={cards}
+          setCards={setCards}
         />
         <Footer />
 

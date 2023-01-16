@@ -7,15 +7,16 @@ function Main(props) {
     // const [userName, setUserName] = useState();
     // const [userDescription, setUserDescription] = useState();
     // const [userAvatar, setUserAvatar] = useState();
-    const [cards, setCards] = useState([]);
+    // const [cards, setCards] = useState([]);
     const currentUser = React.useContext(CurrentUserContext);
+    // console.log(props.cards);
 
     // console.log(currentUser.name);
 
     useEffect(() => {
         api.getCards()
             .then((initialCards) => {
-                setCards(initialCards);
+                props.setCards(initialCards);
                 // console.log(initialCards[1]._id);
             })
             .catch((error) => console.log(`Ошибка при загрузке страницы: ${error}`));
@@ -67,11 +68,13 @@ function Main(props) {
 
             <section className="cards">
                 <ul className="cards__items">
-                    {cards.map((cardItem) => (
+                    {props.cards.map((cardItem) => (
                         <Card
                             card={cardItem}
                             key={cardItem._id}
                             onCardClick={props.onCardClick}
+                            onCardLike={props.onCardLike}
+
                         />
                     ))}
                 </ul>

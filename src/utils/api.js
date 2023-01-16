@@ -63,6 +63,17 @@ class Api {
         })
     };
 
+    changeLikeCardStatus(cardID, isLiked) {
+        if (isLiked) {
+            console.log('inside setLike');
+            return this.setLike(cardID);
+        }
+        else {
+            console.log('inside deleteLike');
+            return this.deleteLike(cardID);
+        }
+    }
+
     setLike(cardID) {
         return this._request(`${this._cardUrl}/${cardID}/likes`, {
             method: "PUT",

@@ -4,14 +4,19 @@ import { CurrentUserContext } from "./CurrentUserContext";
 function Card(props) {
     const currentUser = React.useContext(CurrentUserContext);
     const isOwn = props.card.owner._id === currentUser._id;
-    const isLiked = props.card.likes.some(i => i._id === currentUser._id);
+    const isLiked = props.card.likes.some(item => item._id === currentUser._id);
     const cardLikeButtonClassName = (`cards__like-button-icon ${isLiked && 'cards__like-button-icon_active'}`);
+
     function handleDeleteClick() {
 
     }
 
     function handleClick() {
         props.onCardClick(props.card);
+    }
+
+    function handleLikeClick() {
+        props.onCardLike(props.card);
     }
 
     return (
@@ -35,6 +40,7 @@ function Card(props) {
                         aria-label="кнопка нравится"
                         type="button"
                         className={cardLikeButtonClassName}
+                        onClick={handleLikeClick}
                     ></button>
                     <p className={"cards__like-counter"}>{props.card.likes.length}</p>
                 </div>
