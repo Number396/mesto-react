@@ -51,13 +51,22 @@ function App() {
 
   function handleCardLike(card) {
     const isLiked = card.likes.some(item => item._id === currentUser._id);
-    console.log(isLiked);
-    console.log(card);
+    // console.log(isLiked);
+    // console.log(card);
     api.changeLikeCardStatus(card._id, !isLiked)
       .then((newCard) => {
-        console.log(newCard);
+        // console.log(newCard);
         setCards((cards) => cards.map((c) => c._id === card._id ? newCard : c));
       });
+  }
+
+  function handleCardDelete(card) {
+    console.log(card._id);
+    api.deleteCard(card._id)
+      .then(() => {
+        console.log('inside deleteCard handle');
+        setCards((cards) => cards.filter((c) => c._id !== card._id));
+      })
   }
 
   return (
@@ -72,6 +81,7 @@ function App() {
           onCardLike={handleCardLike}
           cards={cards}
           setCards={setCards}
+          onCardDelete={handleCardDelete}
         />
         <Footer />
 

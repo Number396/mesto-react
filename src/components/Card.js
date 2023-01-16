@@ -8,7 +8,7 @@ function Card(props) {
     const cardLikeButtonClassName = (`cards__like-button-icon ${isLiked && 'cards__like-button-icon_active'}`);
 
     function handleDeleteClick() {
-
+        props.onCardDelete(props.card);
     }
 
     function handleClick() {
