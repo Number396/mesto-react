@@ -12,7 +12,12 @@ function PopupWithForm(props) {
                     className="popup__close-button button-opacity"
                 ></button>
                 <h2 className="popup__title">{props.title}</h2>
-                <form name={props.name} className="popup__form" noValidate>
+                <form
+                    name={props.name}
+                    className="popup__form"
+                    noValidate
+                    onSubmit={props.onSubmit}
+                >
                     <fieldset className={`popup__set ${props.extraClass}`}>
                         {props.children}
                         <button type="submit" className="popup__submit-button">

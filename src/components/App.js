@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { api } from "../utils/api";
 import { CurrentUserContext } from "./CurrentUserContext";
+import EditProfilePopup from "./EditProfilePopup";
 import Footer from "./Footer";
 import Header from "./Header";
 import ImagePopup from "./ImagePopup";
@@ -60,6 +61,15 @@ function App() {
       });
   }
 
+  function handleUpdateUser({ name, about }) {
+    // console.log(formData);
+    api.setUserInfo({ name, about })
+      .then((userData) => {
+        setCurrentUser(userData);
+        closeAllPopups();
+      })
+  }
+
   function handleCardDelete(card) {
     console.log(card._id);
     api.deleteCard(card._id)
@@ -84,8 +94,13 @@ function App() {
           onCardDelete={handleCardDelete}
         />
         <Footer />
+        <EditProfilePopup
+          isOpen={isEditProfilePopupOpen}
+          onClose={closeAllPopups}
+          onUpdateUser={handleUpdateUser}
+        />
 
-        <PopupWithForm
+        {/* <PopupWithForm
           title="Редактировать профиль"
           name="edit"
           btnText="Сохранить"
@@ -115,7 +130,7 @@ function App() {
             maxLength="200"
           />
           <span className="popup__input-error occupation-input-error"></span>
-        </PopupWithForm>
+        </PopupWithForm> */}
 
         <PopupWithForm
           title="Новое место"

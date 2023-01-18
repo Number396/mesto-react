@@ -34,13 +34,13 @@ class Api {
         })
     };
 
-    updateUserInfo(formData) {
+    setUserInfo({ name, about }) {
         return this._request(this._userUrl, {
             method: "PATCH",
             headers: this._headers,
             body: JSON.stringify({
-                name: formData.name,
-                about: formData.about,
+                name,
+                about,
             }),
         })
     };
