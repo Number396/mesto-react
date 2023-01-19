@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { api } from "../utils/api";
 import { CurrentUserContext } from "./CurrentUserContext";
+import EditAvatarPopup from "./EditAvatarPopup";
 import EditProfilePopup from "./EditProfilePopup";
 import Footer from "./Footer";
 import Header from "./Header";
@@ -11,7 +12,7 @@ import PopupWithForm from "./PopupWithForm";
 function App() {
   const [isEditProfilePopupOpen, setIsEditProfilePopupOpen] = useState(false);
   const [isAddPlacePopupOpen, setisAddPlacePopupOpen] = useState(false);
-  const [isEditAvatarPopupOpen, setisEditAvatarPopupOpen] = useState(false);
+  const [isEditAvatarPopupOpen, setIsEditAvatarPopupOpen] = useState(false);
   const [isImagePopupOpen, setIsImagePopupOpen] = useState(false);
   const [selectedCard, setSelectedCard] = useState({});
   const [currentUser, setCurrentUser] = useState({});
@@ -35,13 +36,13 @@ function App() {
   }
 
   function handleEditAvatarClick() {
-    setisEditAvatarPopupOpen(true);
+    setIsEditAvatarPopupOpen(true);
   }
 
   function closeAllPopups() {
     setIsEditProfilePopupOpen(false);
     setisAddPlacePopupOpen(false);
-    setisEditAvatarPopupOpen(false);
+    setIsEditAvatarPopupOpen(false);
     setIsImagePopupOpen(false);
   }
 
@@ -61,15 +62,6 @@ function App() {
       });
   }
 
-  function handleUpdateUser({ name, about }) {
-    // console.log(formData);
-    api.setUserInfo({ name, about })
-      .then((userData) => {
-        setCurrentUser(userData);
-        closeAllPopups();
-      })
-  }
-
   function handleCardDelete(card) {
     console.log(card._id);
     api.deleteCard(card._id)
@@ -77,6 +69,27 @@ function App() {
         console.log('inside deleteCard handle');
         setCards((cards) => cards.filter((c) => c._id !== card._id));
       })
+  }
+
+  function handleUpdateUser({ name, about }) {
+    api.setUserInfo({ name, about })
+      .then((userData) => {
+        setCurrentUser(userData);
+        closeAllPopups();
+      })
+      .catch((error) => console.log(`Ошибка при обновлении профиля: ${error}`));
+  }
+
+  function handleUpdateAvatar({ avatar, inputRef }) {
+    api.setUserAvatar(avatar)
+      .then((userData) => {
+        setCurrentUser(userData);
+        inputRef.current.form.reset();
+        closeAllPopups();
+      })
+      .catch((error) => console.log(`Ошибка при обновлении аватара: ${error}`));
+
+
   }
 
   return (
@@ -98,6 +111,12 @@ function App() {
           isOpen={isEditProfilePopupOpen}
           onClose={closeAllPopups}
           onUpdateUser={handleUpdateUser}
+        />
+
+        <EditAvatarPopup
+          isOpen={isEditAvatarPopupOpen}
+          onClose={closeAllPopups}
+          onUpdateAvatar={handleUpdateAvatar}
         />
 
         {/* <PopupWithForm
@@ -162,7 +181,9 @@ function App() {
           <span className="popup__input-error link-input-error"></span>
         </PopupWithForm>
 
-        <PopupWithForm
+
+
+        {/* <PopupWithForm
           title="Обновить аватар"
           name="avatar"
           btnText="Сохранить"
@@ -179,7 +200,7 @@ function App() {
             required
           />
           <span className="popup__input-error link-input-error"></span>
-        </PopupWithForm>
+        </PopupWithForm> */}
 
         <PopupWithForm>
           title="Вы уверены?"
