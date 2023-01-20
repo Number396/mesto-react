@@ -1,38 +1,9 @@
-import React, { useEffect, useState } from "react";
-import { api } from "../utils/api.js";
+import { useContext } from "react";
 import Card from "./Card.js";
 import { CurrentUserContext } from "./CurrentUserContext.js";
 
 function Main(props) {
-    // const [userName, setUserName] = useState();
-    // const [userDescription, setUserDescription] = useState();
-    // const [userAvatar, setUserAvatar] = useState();
-    // const [cards, setCards] = useState([]);
-    const currentUser = React.useContext(CurrentUserContext);
-    // console.log(props.cards);
-
-    // console.log(currentUser.name);
-
-    useEffect(() => {
-        api.getCards()
-            .then((initialCards) => {
-                props.setCards(initialCards);
-                // console.log(initialCards[1]._id);
-            })
-            .catch((error) => console.log(`Ошибка при загрузке страницы: ${error}`));
-    }, []);
-
-    // useEffect(() => {
-    //     Promise.all([api.getUserInfo(), api.getCards()])
-    //         .then(([userData, initialCards]) => {
-    //             setUserName(userData.name);
-    //             setUserDescription(userData.about);
-    //             setUserAvatar(userData.avatar);
-    //             setCards(initialCards);
-    //             // console.log(initialCards[1]._id);
-    //         })
-    //         .catch((error) => console.log(`Ошибка при загрузке страницы: ${error}`));
-    // }, []);
+    const currentUser = useContext(CurrentUserContext);
 
     return (
         <main>
@@ -83,4 +54,5 @@ function Main(props) {
         </main>
     );
 }
+
 export default Main;

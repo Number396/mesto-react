@@ -6,7 +6,6 @@ function EditProfilePopup(props) {
     const [name, setName] = useState('');
     const [description, setDescription] = useState('');
     const currentUser = useContext(CurrentUserContext);
-    // console.log(name);
 
     function handleNameChange(e) {
         setName(e.target.value);
@@ -35,7 +34,6 @@ function EditProfilePopup(props) {
             title="Редактировать профиль"
             name="edit"
             btnText="Сохранить"
-            // flsClass="popup__set"
             isOpen={props.isOpen}
             onClose={props.onClose}
             onSubmit={handleSubmit}
@@ -67,9 +65,7 @@ function EditProfilePopup(props) {
             />
             <span className="popup__input-error occupation-input-error"></span>
         </PopupWithForm>
-
     );
-
 }
 
 export default EditProfilePopup;

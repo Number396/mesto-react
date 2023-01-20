@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import { api } from "../utils/api";
+import AddPlacePopup from "./AddPlacePopup";
 import { CurrentUserContext } from "./CurrentUserContext";
 import EditAvatarPopup from "./EditAvatarPopup";
 import EditProfilePopup from "./EditProfilePopup";
@@ -19,12 +20,12 @@ function App() {
   const [cards, setCards] = useState([]);
 
   useEffect(() => {
-    api.getUserInfo()
-      .then((userData) => {
-        // console.log(userData);
+    Promise.all([api.getUserInfo(), api.getCards()])
+      .then(([userData, initialCards]) => {
         setCurrentUser(userData);
+        setCards(initialCards);
       })
-      .catch((error) => console.log(`Ошибка при загрузке информации о пользователе: ${error}`));
+      .catch((error) => console.log(`Ошибка при загрузке страницы: ${error}`));
   }, []);
 
   function handleEditProfileClick() {
@@ -53,20 +54,15 @@ function App() {
 
   function handleCardLike(card) {
     const isLiked = card.likes.some(item => item._id === currentUser._id);
-    // console.log(isLiked);
-    // console.log(card);
     api.changeLikeCardStatus(card._id, !isLiked)
       .then((newCard) => {
-        // console.log(newCard);
         setCards((cards) => cards.map((c) => c._id === card._id ? newCard : c));
       });
   }
 
   function handleCardDelete(card) {
-    console.log(card._id);
     api.deleteCard(card._id)
       .then(() => {
-        console.log('inside deleteCard handle');
         setCards((cards) => cards.filter((c) => c._id !== card._id));
       })
   }
@@ -88,8 +84,16 @@ function App() {
         closeAllPopups();
       })
       .catch((error) => console.log(`Ошибка при обновлении аватара: ${error}`));
+  }
 
-
+  function handleAddPlaceSubmit({ name, link, e }) {
+    api.addCard({ name, link })
+      .then((newCard) => {
+        setCards([newCard, ...cards]);
+        e.target.reset();
+        closeAllPopups();
+      })
+      .catch((error) => console.log(`Ошибка добавления карточки: ${error}`))
   }
 
   return (
@@ -119,88 +123,11 @@ function App() {
           onUpdateAvatar={handleUpdateAvatar}
         />
 
-        {/* <PopupWithForm
-          title="Редактировать профиль"
-          name="edit"
-          btnText="Сохранить"
-          // flsClass="popup__set"
-          isOpen={isEditProfilePopupOpen}
-          onClose={closeAllPopups}
-        >
-          <input
-            type="text"
-            name="name-input"
-            id="name"
-            placeholder="Имя"
-            className="popup__input popup__input_type_name"
-            required
-            minLength="2"
-            maxLength="40"
-          />
-          <span className="popup__input-error name-input-error"></span>
-          <input
-            type="text"
-            name="occupation-input"
-            id="about"
-            placeholder="Профессия"
-            className="popup__input popup__input_type_occupation"
-            required
-            minLength="2"
-            maxLength="200"
-          />
-          <span className="popup__input-error occupation-input-error"></span>
-        </PopupWithForm> */}
-
-        <PopupWithForm
-          title="Новое место"
-          name="add"
-          btnText="Создать"
-          // flsClass="popup__set"
+        <AddPlacePopup
           isOpen={isAddPlacePopupOpen}
           onClose={closeAllPopups}
-        >
-          <input
-            type="text"
-            name="place-input"
-            id="placeInput"
-            placeholder="Наименование места"
-            className="popup__input popup__input_type_place"
-            required
-            minLength="2"
-            maxLength="30"
-          />
-          <span className="popup__input-error place-input-error"></span>
-          <input
-            type="url"
-            name="link-input"
-            id="linkInput"
-            placeholder="Введите ссылку"
-            className="popup__input popup__input_type_link"
-            required
-          />
-          <span className="popup__input-error link-input-error"></span>
-        </PopupWithForm>
-
-
-
-        {/* <PopupWithForm
-          title="Обновить аватар"
-          name="avatar"
-          btnText="Сохранить"
-          // flsClass="popup__set"
-          isOpen={isEditAvatarPopupOpen}
-          onClose={closeAllPopups}
-        >
-          <input
-            type="url"
-            name="link-input"
-            id="linkInputAvatar"
-            placeholder="Введите ссылку"
-            className="popup__input popup__input_type_link"
-            required
-          />
-          <span className="popup__input-error link-input-error"></span>
-        </PopupWithForm> */}
+          onAddPlace={handleAddPlaceSubmit}
+        />
 
         <PopupWithForm>
           title="Вы уверены?"
