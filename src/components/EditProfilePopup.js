@@ -1,5 +1,5 @@
 import { useState, useContext, useEffect } from "react";
-import { CurrentUserContext } from "./CurrentUserContext";
+import { CurrentUserContext } from "../contexts/CurrentUserContext";
 import PopupWithForm from "./PopupWithForm";
 
 function EditProfilePopup(props) {
@@ -48,7 +48,7 @@ function EditProfilePopup(props) {
                 minLength="2"
                 maxLength="40"
                 onChange={handleNameChange}
-                value={name}
+                value={name || ''}
             />
             <span className="popup__input-error name-input-error"></span>
             <input
@@ -61,7 +61,7 @@ function EditProfilePopup(props) {
                 minLength="2"
                 maxLength="200"
                 onChange={handleDescriptionChange}
-                value={description}
+                value={description || ''}
             />
             <span className="popup__input-error occupation-input-error"></span>
         </PopupWithForm>

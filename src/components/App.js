@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { api } from "../utils/api";
 import AddPlacePopup from "./AddPlacePopup";
-import { CurrentUserContext } from "./CurrentUserContext";
+import { CurrentUserContext } from "../contexts/CurrentUserContext";
 import EditAvatarPopup from "./EditAvatarPopup";
 import EditProfilePopup from "./EditProfilePopup";
 import Footer from "./Footer";
@@ -18,6 +18,9 @@ function App() {
   const [selectedCard, setSelectedCard] = useState({});
   const [currentUser, setCurrentUser] = useState({});
   const [cards, setCards] = useState([]);
+  //поднял контекст что бы ресетить поля формы после удачного запроса
+  const [name, setName] = useState('');
+  const [link, setLink] = useState('');
 
   useEffect(() => {
     Promise.all([api.getUserInfo(), api.getCards()])
@@ -57,7 +60,8 @@ function App() {
     api.changeLikeCardStatus(card._id, !isLiked)
       .then((newCard) => {
         setCards((cards) => cards.map((c) => c._id === card._id ? newCard : c));
-      });
+      })
+      .catch((error) => console.log(`Ошибка установки лайка: ${error}`));
   }
 
   function handleCardDelete(card) {
@@ -86,11 +90,12 @@ function App() {
       .catch((error) => console.log(`Ошибка при обновлении аватара: ${error}`));
   }
 
-  function handleAddPlaceSubmit({ name, link, e }) {
+  function handleAddPlaceSubmit({ name, link }) {
     api.addCard({ name, link })
       .then((newCard) => {
         setCards([newCard, ...cards]);
-        e.target.reset();
+        setName('');
+        setLink('');
         closeAllPopups();
       })
       .catch((error) => console.log(`Ошибка добавления карточки: ${error}`))
@@ -127,6 +132,10 @@ function App() {
           isOpen={isAddPlacePopupOpen}
           onClose={closeAllPopups}
           onAddPlace={handleAddPlaceSubmit}
+          name={name}
+          link={link}
+          setName={setName}
+          setLink={setLink}
         />
 
         <PopupWithForm>

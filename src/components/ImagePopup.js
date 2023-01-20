@@ -16,7 +16,7 @@ function ImagePopup({ card, isOpen, onClose }) {
                     aria-label="кнопка закрыть фотографию места"
                     type="button"
                     className="popup__close-button button-opacity"
-                ></button>
+                />
                 <figcaption className="popup__caption">
                     {card?.name}
                 </figcaption>
