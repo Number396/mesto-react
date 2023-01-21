@@ -69,6 +69,7 @@ function App() {
       .then(() => {
         setCards((cards) => cards.filter((c) => c._id !== card._id));
       })
+      .catch((error) => console.log(`Ошибка при удалении карточки: ${error}`));
   }
 
   function handleUpdateUser({ name, about }) {
